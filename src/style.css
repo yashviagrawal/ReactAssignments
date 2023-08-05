@@ -1,0 +1,30 @@
+/* style.css */
+
+.game {
+    width: 300px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    margin-bottom: 10px;
+  }
+  
+  .cell {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    border: 2px solid black;
+    cursor: pointer;
+  }
+  
+  .status {
+    font-size: 1.5rem;
+  }
+  
