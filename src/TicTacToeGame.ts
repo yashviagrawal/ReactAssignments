@@ -1,5 +1,3 @@
-// TicTacToeGame.ts
-
 export type Player = 'X' | 'O';
 type Board = Player[];
 

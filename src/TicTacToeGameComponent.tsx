@@ -1,7 +1,5 @@
-// TicTacToeGameComponent.tsx
-
 import React, { useState } from 'react';
-import TicTacToeGame, { Player } from './TicTacToeGame'; // Import the TicTacToeGame class and Player type
+import TicTacToeGame, { Player } from './TicTacToeGame'; 
 
 
 const game = new TicTacToeGame();
