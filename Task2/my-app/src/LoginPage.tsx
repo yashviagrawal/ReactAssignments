@@ -1,14 +1,29 @@
 import React, { Component } from 'react';
-import { Button, Input } from 'antd';
+import { Form, Input, Button, Card } from 'antd';
+import { Link } from 'react-router-dom';
 
 class LoginPage extends Component {
   render() {
     return (
-      <div>
-        <h1>Login</h1>
-        <Input placeholder="Username" />
-        <Input.Password placeholder="Password" />
-        <Button type="primary">Login</Button>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <Card style={{ width: 400, padding: '24px' }}>
+          <h2>Login</h2>
+          <Form>
+            <Form.Item label="Username">
+              <Input placeholder="Username" />
+            </Form.Item>
+            <Form.Item label="Password">
+              <Input.Password placeholder="Password" />
+            </Form.Item>
+            <Form.Item>
+              <Link to="/dashboard">
+                <Button type="primary" style={{ width: '100%' }}>
+                  Login
+                </Button>
+              </Link>
+            </Form.Item>
+          </Form>
+        </Card>
       </div>
     );
   }
