@@ -9,14 +9,15 @@ const { Header, Content, Sider } = Layout;
 
 class App extends Component {
   render() {
+
     return (
       <Router>
         <Routes>
           <Route path="/" element={<LoginPage />} />
-          <Route path="/logout" element={<LoginPage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/about" element={<AboutMe />} />
-          <Route path="/contact" element={<ContactMe />} />
+              <Route path="/logout" element={<LoginPage />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/about" element={<AboutMe />} />
+              <Route path="/contact" element={<ContactMe />} />
         </Routes>
       </Router>
     );
@@ -33,10 +34,8 @@ class Dashboard extends Component {
             <Menu.Item key="1">Username</Menu.Item>
             <Menu.Item key="/logout">
             <Link to="/logout">
-
-            Logout
-      
-        </Link>
+              Logout
+            </Link>
             </Menu.Item>
           </Menu>
         </Header>
@@ -60,7 +59,7 @@ class Dashboard extends Component {
               style={{
                 padding: 24,
                 margin: 0,
-                minHeight: 280,
+                minHeight: 'calc(100vh - 112px)'
               }}
             >
               {/* Content based on the selected menu */}

@@ -4,12 +4,20 @@ body {
     margin: 0;
     padding: 0;
     background-image: linear-gradient(to right, #141e30, #243b55);
-
+    width: 100%;
     font-family: Arial, sans-serif;
     color: antiquewhite;
   }
 
 
-.ant-form-item-required {
+/* .ant-form-item-required {
   color: white !important;
+} */
+
+.site-layout-background {
+  background-image: linear-gradient(to right, #141e30, #243b55);
+}
+
+.ant-layout  {
+  background-image: linear-gradient(to right, #141e30, #243b55) !important;
 }

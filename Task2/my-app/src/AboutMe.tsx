@@ -1,10 +1,45 @@
 import React, { Component } from 'react';
-import { Card } from 'antd';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { Card, Layout, Menu } from 'antd';
+import LoginPage from './LoginPage';
+
+const { Header, Content, Sider } = Layout;
+
+class App extends Component {
+  render() {
+    return (
+      <Router>
+        <Routes>
+          <Route path="/logout" element={<LoginPage />} />
+        </Routes>
+      </Router>
+    );
+  }
+}
+
+
 
 class AboutMe extends Component {
   render() {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+
+      <Layout>
+
+      <Header>
+          <div className="logo" />
+          <Menu theme="dark" mode="horizontal" style={{ display: 'flex', justifyContent: 'flex-end' }} defaultSelectedKeys={['1']}>
+            <Menu.Item key="1">Username</Menu.Item>
+            <Menu.Item key="/logout">
+            <Link to="/logout">
+
+            Logout
+      
+        </Link>
+            </Menu.Item>
+          </Menu>
+        </Header>
+
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 'calc(100vh - 112px)' }}>
         <Card style={{ width: 400 }}>
           <h2>About Me</h2>
           <p>
@@ -17,6 +52,7 @@ class AboutMe extends Component {
           </p>
         </Card>
       </div>
+      </Layout>
     );
   }
 }
