@@ -8,4 +8,8 @@ body {
     font-family: Arial, sans-serif;
     color: antiquewhite;
   }
-  
+
+
+.ant-form-item-required {
+  color: white !important;
+}

@@ -1,20 +1,20 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors'); // Import the cors package
+const cors = require('cors'); 
 
 const app = express();
-const port = 3001; // Choose a suitable port
+const port = 3001; 
 
 app.use(bodyParser.json());
-app.use(cors()); // Enable CORS for all routes
+app.use(cors()); 
 
-// Mock user data for demonstration
+
 const users = [
   { id: 1, username: 'hirak', password: '1212' },
   { id: 2, username: 'yashvi', password: '1212' },
 ];
 
-// POST route for login validation
+
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
   const user = users.find(u => u.username === username && u.password === password);

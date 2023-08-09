@@ -11,7 +11,7 @@ class ContactMePage extends Component {
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
         <Form
           onFinish={this.handleSubmit}
-          style={{ width: 400 }}
+          style={{ width: 400 , color: 'white' }}
           layout="vertical"
         >
           <h2>Contact Me</h2>
