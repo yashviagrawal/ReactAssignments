@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Input, Button, Card, message } from 'antd';
 import { Link } from 'react-router-dom';
-import axios from 'axios'; // Import Axios
+import axios from 'axios';
 
 class LoginPage extends Component {
   handleLogin = async (values: any) => {

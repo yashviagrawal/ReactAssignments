@@ -29,3 +29,26 @@ app.post('/login', (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+
+app.post('/submitContact', (req, res) => {
+    const contactData = req.body;
+  
+    // Read existing data from the JSON file
+    let existingData = [];
+    try {
+      const dataFromFile = fs.readFileSync('contactData.json', 'utf8');
+      existingData = JSON.parse(dataFromFile);
+    } catch (error) {
+      // File might not exist yet
+    }
+  
+    // Add new data to the existing data
+    existingData.push(contactData);
+  
+    // Write the updated data back to the JSON file
+    fs.writeFileSync('contactData.json', JSON.stringify(existingData));
+  
+    res.status(200).send({ message: 'Contact data saved successfully' });
+  });
+  
