@@ -11,7 +11,6 @@ class LoginPage extends Component {
       if (response.status === 200) {
         // Authentication successful
         message.success('Login successful');
-        // Navigate to the dashboard page
         window.location.href = '/dashboard';
 
         // Perform further actions like redirecting to the dashboard
