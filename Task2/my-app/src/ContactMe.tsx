@@ -4,8 +4,59 @@ import { Form, Input, Button, Card, message, Layout, Menu } from 'antd';
 import axios from 'axios';
 import { FormInstance } from 'antd/lib/form';
 import LoginPage from './LoginPage';
+import AboutMe from './AboutMe';
+import Dashboard from './App';
+
 
 const { Header, Content, Sider } = Layout;
+const { SubMenu } = Menu;
+
+
+const menuData = [
+  {
+    key: '1',
+    title: 'Home',
+    children: [
+      {
+        key: '1-1',
+        title: 'Module 1',
+        children: [
+          {
+            key: '1-1-1',
+            title: 'Sub-Module 1',
+            children: [
+              {
+                key: '1-1-1-1',
+                title: 'Form Group 1',
+                children: [
+                  { key: '1-1-1-1-1', title: 'Form 1' },
+                  { key: '1-1-1-1-2', title: 'Form 2' },
+                  
+                ],
+              },
+              
+            ],
+          },
+          
+        ],
+      },
+      
+    ],
+  },
+  {
+    key: 'dashboard',
+    title: 'Dashboard',
+  },
+  {
+    key: 'about',
+    title: 'About Me',
+  },
+  {
+    key: 'contact',
+    title: 'Contact Me',
+  },
+];
+
 
 class App extends Component {
   render() {
@@ -13,6 +64,9 @@ class App extends Component {
       <Router>
         <Routes>
           <Route path="/logout" element={<LoginPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/about" element={<AboutMe />} />
+          {/* <Route path="/contact" element={<ContactMe />} /> */}
         </Routes>
       </Router>
     );
@@ -39,6 +93,29 @@ class ContactMePage extends Component {
     }
   };
 
+  handleSearch = (value: string) => {
+
+  };
+
+  renderMenuItems = (menuItems: any[]) => { 
+    return menuItems.map((menuItem) => {
+      if (menuItem.children) {
+        return (
+          <SubMenu key={menuItem.key} title={menuItem.title}>
+            {this.renderMenuItems(menuItem.children)}
+          </SubMenu>
+        );
+      } else {
+        return (
+          <Menu.Item key={menuItem.key}>
+            <Link to={`/${menuItem.key}`}>{menuItem.title}</Link>
+          </Menu.Item>
+        );
+      }
+    });
+  };
+
+
   render() {
     return (
       
@@ -58,7 +135,16 @@ class ContactMePage extends Component {
           </Menu>
         </Header>
 
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 'calc(100vh - 112px)' }}>
+        <Layout>
+          <Sider style={{ width: 200}} className="site-layout-background">
+            {/* Use Input.Search with the updated handleSearch */}
+            <Input.Search placeholder="Search Menu" onSearch={this.handleSearch} />
+            <Menu mode="vertical" defaultSelectedKeys={['1']} style={{ height: '100%' }}>
+              {this.renderMenuItems(menuData)}
+            </Menu>
+          </Sider>
+
+      <div style={{ display: 'flex', paddingLeft: 300, justifyContent: 'center', alignItems: 'center', minHeight: 'calc(100vh - 112px)' }}>
         <Card style={{ width: 500, padding: '18px' }}>
         <Form ref={this.formRef} onFinish={this.handleSubmit} style={{ width: 400 }}>
             <h2>Contact Me</h2>
@@ -79,6 +165,7 @@ class ContactMePage extends Component {
         </Form>
         </Card>
       </div>
+      </Layout>
       </Layout>
     );
   }

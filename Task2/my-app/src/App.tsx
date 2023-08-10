@@ -41,6 +41,10 @@ const menuData = [
     ],
   },
   {
+    key: 'dashboard',
+    title: 'Dashboard',
+  },
+  {
     key: 'about',
     title: 'About Me',
   },
@@ -67,12 +71,12 @@ class App extends Component {
 }
 
 class Dashboard extends Component {
-  // Filter logic
+
   handleSearch = (value: string) => {
-    // Implement your search logic here
+
   };
 
-  renderMenuItems = (menuItems: any[]) => { // Specify the type as 'any[]'
+  renderMenuItems = (menuItems: any[]) => { 
     return menuItems.map((menuItem) => {
       if (menuItem.children) {
         return (
