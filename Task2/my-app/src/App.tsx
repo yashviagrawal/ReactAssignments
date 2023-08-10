@@ -8,7 +8,7 @@ import ContactMe from './ContactMe';
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
 
-// Sample menu data structure
+
 const menuData = [
   {
     key: '1',
@@ -28,16 +28,16 @@ const menuData = [
                 children: [
                   { key: '1-1-1-1-1', title: 'Form 1' },
                   { key: '1-1-1-1-2', title: 'Form 2' },
-                  // ... more forms
+                  
                 ],
               },
-              // ... more form groups
+              
             ],
           },
-          // ... more sub-modules
+          
         ],
       },
-      // ... more modules
+      
     ],
   },
   {
@@ -81,7 +81,11 @@ class Dashboard extends Component {
           </SubMenu>
         );
       } else {
-        return <Menu.Item key={menuItem.key}>{menuItem.title}</Menu.Item>;
+        return (
+          <Menu.Item key={menuItem.key}>
+            <Link to={`/${menuItem.key}`}>{menuItem.title}</Link>
+          </Menu.Item>
+        );
       }
     });
   };
