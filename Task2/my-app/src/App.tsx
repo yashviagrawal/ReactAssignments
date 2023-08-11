@@ -6,6 +6,7 @@ import LoginPage from './LoginPage';
 import AboutMe from './AboutMe';
 import ContactMe from './ContactMe';
 import FormPage from './Form';
+// import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 
 const { Header, Content } = Layout;
 
@@ -95,9 +96,18 @@ class App extends Component {
   }
 }
 
+
+// const COLORS = ['#0088FE', '#00C49F', '#FFBB28'];
+
 class Dashboard extends Component {
 
   render() {
+
+    // const data = [
+    //   { name: 'Category A', value: 350 },
+    //   { name: 'Category B', value: 450 },
+    //   { name: 'Category C', value: 300 },
+    // ];
 
     return (
       <Layout>
@@ -121,7 +131,28 @@ class Dashboard extends Component {
                 minHeight: 'calc(100vh - 112px)',
               }}
             >
-              {/* Content based on the selected menu */}
+              {
+              //   <div className="chart-container">
+              //   <h2>Pie Chart Widget</h2>
+              //   <ResponsiveContainer width="80%" height={300}>
+              //     <PieChart>
+              //       <Pie
+              //         data={data}
+              //         dataKey="value"
+              //         cx="50%"
+              //         cy="50%"
+              //         outerRadius={80}
+              //         fill="#8884d8"
+              //         label
+              //       >
+              //         {data.map((entry, index) => (
+              //           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+              //         ))}
+              //       </Pie>
+              //     </PieChart>
+              //   </ResponsiveContainer>
+              // </div>
+              }
             </Content>
           </Layout>
         </Layout>
