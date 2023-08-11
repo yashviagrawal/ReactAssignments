@@ -1,59 +1,82 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import { Card, Layout, Menu, Input } from 'antd';
+import { Layout, Menu, Card } from 'antd';
+import { DownOutlined, SearchOutlined } from '@ant-design/icons';
 import LoginPage from './LoginPage';
 import ContactMe from './ContactMe';
 import Dashboard from './App';
+import FormPage from './Form';
 
 
-const { Header, Content, Sider } = Layout;
-const { SubMenu } = Menu;
+const { Header, Content } = Layout;
 
+const Sidebar: React.FC = () => {
 
-const menuData = [
-  {
-    key: '1',
-    title: 'Home',
-    children: [
-      {
-        key: '1-1',
-        title: 'Module 1',
-        children: [
-          {
-            key: '1-1-1',
-            title: 'Sub-Module 1',
-            children: [
-              {
-                key: '1-1-1-1',
-                title: 'Form Group 1',
-                children: [
-                  { key: '1-1-1-1-1', title: 'Form 1' },
-                  { key: '1-1-1-1-2', title: 'Form 2' },
-                  
-                ],
-              },
-              
-            ],
-          },
-          
-        ],
-      },
-      
-    ],
-  },
-  {
-    key: 'dashboard',
-    title: 'Dashboard',
-  },
-  {
-    key: 'about',
-    title: 'About Me',
-  },
-  {
-    key: 'contact',
-    title: 'Contact Me',
-  },
-];
+  const [searchValue, setSearchValue] = useState("");
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(event.target.value);
+  };
+
+  const filteredItems = ["dashboard", "contact", "about"].filter(item =>
+    item.includes(searchValue.toLowerCase())
+  );
+
+  return (
+    <div className="sidebar">
+      <div className="search-bar">
+        <input
+          type="text"
+          placeholder="Search"
+          value={searchValue}
+          onChange={handleSearch}
+        />
+        <button>
+          <SearchOutlined />
+        </button>
+      </div>
+      {filteredItems.map(item => (
+        <Link key={item} to={`/${item}`}>
+          {item.charAt(0).toUpperCase() + item.slice(1)}
+        </Link>
+      ))}
+
+      <div className="dropdown">
+        <button className="dropbtn">
+          Dropdown <DownOutlined />
+        </button>
+        <div className="dropdown-content">
+          <div className="sub-dropdown">
+            <button className="dropbtn">
+              Module 1 <DownOutlined />
+            </button>
+            <div className="sub-dropdown-content">
+            <div className="sub1-dropdown">
+            <button className="dropbtn">
+              Sub-Module 1 <DownOutlined />
+            </button>
+            <div className="sub2-dropdown-content">
+            <div className="sub2-dropdown">
+            <button className="dropbtn">
+              Form-Group 1 <DownOutlined />
+            </button>
+            <div className="sub3-dropdown-content">
+            <Link to="/form">Form 1</Link>
+            <Link to="/form">Form 2</Link>
+            <Link to="/form">Form 3</Link>
+            <Link to="/form">Form 4</Link>
+            <Link to="/form">Form 5</Link>
+            </div>
+            </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  );
+};
 
 
 class App extends Component {
@@ -65,6 +88,7 @@ class App extends Component {
           <Route path="/dashboard" element={<Dashboard />} />
           {/* <Route path="/about" element={<AboutMe />} /> */}
           <Route path="/contact" element={<ContactMe />} />
+          <Route path="/form" element={<FormPage />} />
         </Routes>
       </Router>
     );
@@ -74,29 +98,6 @@ class App extends Component {
 
 
 class AboutMe extends Component {
-
-  handleSearch = (value: string) => {
-
-  };
-
-  renderMenuItems = (menuItems: any[]) => { 
-    return menuItems.map((menuItem) => {
-      if (menuItem.children) {
-        return (
-          <SubMenu key={menuItem.key} title={menuItem.title}>
-            {this.renderMenuItems(menuItem.children)}
-          </SubMenu>
-        );
-      } else {
-        return (
-          <Menu.Item key={menuItem.key}>
-            <Link to={`/${menuItem.key}`}>{menuItem.title}</Link>
-          </Menu.Item>
-        );
-      }
-    });
-  };
-
   
   render() {
     return (
@@ -116,15 +117,8 @@ class AboutMe extends Component {
             </Menu.Item>
           </Menu>
         </Header>
-
+        <Sidebar />
         <Layout>
-          <Sider style={{ width: 200}} className="site-layout-background">
-            {/* Use Input.Search with the updated handleSearch */}
-            <Input.Search placeholder="Search Menu" onSearch={this.handleSearch} />
-            <Menu mode="vertical" defaultSelectedKeys={['1']} style={{ height: '100%' }}>
-              {this.renderMenuItems(menuData)}
-            </Menu>
-          </Sider>
 
       <div style={{ display: 'flex', paddingLeft: 300, justifyContent: 'center', alignItems: 'center', minHeight: 'calc(100vh - 112px)' }}>
         <Card style={{ width: 400 }}>

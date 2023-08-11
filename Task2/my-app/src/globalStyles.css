@@ -9,15 +9,143 @@ body {
     color: antiquewhite;
   }
 
-
-/* .ant-form-item-required {
-  color: white !important;
-} */
-
 .site-layout-background {
   background-image: linear-gradient(to right, #141e30, #243b55);
 }
 
 .ant-layout  {
   background-image: linear-gradient(to right, #141e30, #243b55) !important;
+}
+
+
+/* SideBar */
+
+.sidebar {
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  padding-top: 20px;
+  font-size: 18px;
+}
+
+.sidebar a {
+  padding: 8px 8px 8px 16px;
+  text-decoration: none;
+  font-size: 18px;
+  color: white;
+  display: block;
+}
+
+.dropdown, .sub-dropdown, .sub1-dropdown, .sub2-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn {
+  background-color: inherit;
+  color: white;
+  padding: 8px 16px;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: powderblue;
+  min-width: 180px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.sub-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: pink;
+  min-width: 180px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.sub-dropdown:hover .sub-dropdown-content {
+  display: block;
+}
+
+.sub1-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: tan;
+  min-width: 180px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.sub1-dropdown:hover .sub2-dropdown-content {
+  display: block;
+}
+
+.sub2-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: teal;
+  min-width: 180px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.sub3-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: palegreen;
+  min-width: 180px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+
+.sub2-dropdown:hover .sub3-dropdown-content {
+  display: block;
+}
+
+.search-bar {
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #ddd;
+  background-color: #f5f5f5;
+}
+
+.search-bar input {
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+  width: 70%;
+  background-color: #e0e0e0;
+  color: #333;
+  font-size: 16px;
+  outline: none;
+}
+
+.search-bar button {
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 15px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.search-bar button:hover {
+  background-color: #0056b3;
 }

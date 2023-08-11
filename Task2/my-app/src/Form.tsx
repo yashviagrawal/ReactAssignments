@@ -7,8 +7,7 @@ import { FormInstance } from 'antd/lib/form';
 import LoginPage from './LoginPage';
 import AboutMe from './AboutMe';
 import Dashboard from './App';
-import FormPage from './Form';
-
+import ContactMe from './ContactMe';
 
 const { Header, Content } = Layout;
 
@@ -80,81 +79,78 @@ const Sidebar: React.FC = () => {
   );
 };
 
-
 class App extends Component {
-  render() {
-    return (
-      <Router>
-        <Routes>
-          <Route path="/logout" element={<LoginPage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/about" element={<AboutMe />} />
-          <Route path="/form" element={<FormPage />} />
-          {/* <Route path="/contact" element={<ContactMe />} /> */}
-        </Routes>
-      </Router>
-    );
+    render() {
+      return (
+        <Router>
+          <Routes>
+            <Route path="/logout" element={<LoginPage />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/about" element={<AboutMe />} />
+            {/* <Route path="/form" element={<FormPage />} /> */}
+            <Route path="/contact" element={<ContactMe />} />
+          </Routes>
+        </Router>
+      );
+    }
   }
+  
+
+interface FormPageState {
+  experience: string;
 }
 
-
-class ContactMePage extends Component {
-  formRef = React.createRef<FormInstance>(); // Ref to access form methods
-
-  handleSubmit = async (values: any) => {
-    try {
-      const response = await axios.post('http://localhost:3001/submitContact', values);
-
-      if (response.status === 200) {
-        message.success('Contact data saved successfully');
-        // Reset the form after successful submission
-        this.formRef.current?.resetFields();
-      } else {
-        message.error('Failed to save contact data');
+class FormPage extends Component {
+    formRef = React.createRef<FormInstance>(); // Ref to access form methods
+  
+    handleSubmit = async (values: any) => {
+      try {
+        const response = await axios.post('http://localhost:3001/submitContact', values);
+  
+        if (response.status === 200) {
+          message.success('Contact data saved successfully');
+          // Reset the form after successful submission
+          this.formRef.current?.resetFields();
+        } else {
+          message.error('Failed to save contact data');
+        }
+      } catch (error) {
+        console.error('An error occurred:', error);
       }
-    } catch (error) {
-      console.error('An error occurred:', error);
-    }
-  };
-
+    };
 
   render() {
+
     return (
-      
-    <Layout>
 
-      <Header>
-          <div className="logo" />
-          <Menu theme="dark" mode="horizontal" style={{ display: 'flex', justifyContent: 'flex-end' }} defaultSelectedKeys={['1']}>
-            <Menu.Item key="1">Username</Menu.Item>
-            <Menu.Item key="/logout">
-            <Link to="/logout">
-
-            Logout
-      
-        </Link>
-            </Menu.Item>
-          </Menu>
-        </Header>
-        <Sidebar />
         <Layout>
 
-      <div style={{ display: 'flex', paddingLeft: 300, justifyContent: 'center', alignItems: 'center', minHeight: 'calc(100vh - 112px)' }}>
-        <Card style={{ width: 500, padding: '18px' }}>
-        <Form ref={this.formRef} onFinish={this.handleSubmit} style={{ width: 400 }}>
-            <h2>Contact Me</h2>
-          <Form.Item label="Name" name="name" rules={[{ required: true, message: 'Please enter your name' }]}>
-            <Input />
-          </Form.Item>
-          <Form.Item label="Email" name="email" rules={[{ required: true, message: 'Please enter your email' }]}>
-            <Input type="email" />
-          </Form.Item>
-          <Form.Item label="Message" name="message" rules={[{ required: true, message: 'Please enter your message' }]}>
+        <Header>
+            <div className="logo" />
+            <Menu theme="dark" mode="horizontal" style={{ display: 'flex', justifyContent: 'flex-end' }} defaultSelectedKeys={['1']}>
+              <Menu.Item key="1">Username</Menu.Item>
+              <Menu.Item key="/logout">
+              <Link to="/logout">
+  
+              Logout
+        
+          </Link>
+              </Menu.Item>
+            </Menu>
+          </Header>
+          <Sidebar />
+
+          <Layout>
+          <div style={{ display: 'flex', paddingLeft: 300, justifyContent: 'center', alignItems: 'center', minHeight: 'calc(100vh - 112px)' }}>
+          <Card style={{ width: 500, padding: '18px' }}>
+          <Form ref={this.formRef} onFinish={this.handleSubmit} style={{ width: 400 }}>
+            <h2>Share your experience!</h2>
+          <Form.Item label="Feedback" name="message" rules={[{ required: true, message: 'Please enter your feedback' }]}>
             <Input.TextArea rows={4} />
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit">
-              Submit
+              Submit!
             </Button>
           </Form.Item>
         </Form>
@@ -166,4 +162,4 @@ class ContactMePage extends Component {
   }
 }
 
-export default ContactMePage;
+export default FormPage;
