@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Form, Input, Button, Card, message } from 'antd';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 class LoginPage extends Component {
@@ -11,9 +10,12 @@ class LoginPage extends Component {
       if (response.status === 200) {
         // Authentication successful
         message.success('Login successful');
-        window.location.href = '/dashboard';
+        
+        // Manually update the authentication state and store in component state
+        this.setState({ isAuthenticated: true });
 
         // Perform further actions like redirecting to the dashboard
+        window.location.href = '/dashboard';
       } else {
         // Authentication failed
         message.error('Login failed');
@@ -30,7 +32,7 @@ class LoginPage extends Component {
         <Card style={{ width: 400, padding: '24px' }}>
           <h2>Login</h2>
           <Form onFinish={this.handleLogin}>
-            <Form.Item label="Username" name="username" rules={[{ required: true, message: 'Please enter your username' }]}>
+          <Form.Item label="Username" name="username" rules={[{ required: true, message: 'Please enter your username' }]}>
               <Input placeholder="Username" />
             </Form.Item>
             <Form.Item label="Password" name="password" rules={[{ required: true, message: 'Please enter your password' }]}>
