@@ -6,77 +6,133 @@ import LoginPage from './LoginPage';
 import AboutMe from './AboutMe';
 import ContactMe from './ContactMe';
 import FormPage from './Form';
-// import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+import './App.css'
 
 const { Header, Content } = Layout;
 
 const Sidebar: React.FC = () => {
-
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState('');
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
   };
 
-  const filteredItems = ["dashboard", "contact", "about"].filter(item =>
-    item.includes(searchValue.toLowerCase())
-  );
+  const animals = document.getElementsByClassName('animals');
+
+  const searchAnimal = () => {
+    const input = document.getElementById('searchbar') as HTMLInputElement;
+    const inputValue = input.value.toLowerCase();
+
+    for (let i = 0; i < animals.length; i++) {
+      const animal = animals[i] as HTMLElement;
+      if (!animal.innerHTML.toLowerCase().includes(inputValue)) {
+        animal.style.display = 'none';
+      } else {
+        animal.style.display = 'list-item';
+      }
+    }
+  };
+
+  const handleCategoryClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+
+    const item = event.currentTarget.closest('.has-dropdown');
+    if (!item) {
+      return;
+    }
+
+    item.classList.toggle('opened');
+
+    Array.from(item.parentNode!.children).forEach((sibling) => {
+      if (sibling !== item) {
+        sibling.classList.remove('opened');
+      }
+    });
+
+    const toOpen = item.querySelector('.sidebar-dropdown');
+    if (toOpen) {
+      toOpen.classList.toggle('active');
+    }
+
+    Array.from(item.parentNode!.children).forEach((sibling) => {
+      const toClose = sibling.querySelector('.sidebar-dropdown');
+      if (toClose) {
+        toClose.classList.remove('active');
+      }
+    });
+  };
 
   return (
-    <div className="sidebar">
-      <div className="search-bar">
+    <aside className="sidebar position-fixed top-0 left-0 overflow-auto h-100 float-left" id="show-side-navigation1">
+      <div className="search position-relative text-center px-4 py-3 mt-2">
         <input
+          id="searchbar"
+          name="search"
           type="text"
-          placeholder="Search"
+          className="form-control w-100 border-0 bg-transparent"
+          placeholder="Search here"
           value={searchValue}
           onChange={handleSearch}
+          onKeyUp={searchAnimal}
         />
-        <button>
-          <SearchOutlined />
-        </button>
       </div>
-      {filteredItems.map(item => (
-        <Link key={item} to={`/${item}`}>
-          {item.charAt(0).toUpperCase() + item.slice(1)}
-        </Link>
-      ))}
 
-      <div className="dropdown">
-        <button className="dropbtn">
-          Dropdown <DownOutlined />
-        </button>
-        <div className="dropdown-content">
-          <div className="sub-dropdown">
-            <button className="dropbtn">
-              Module 1 <DownOutlined />
-            </button>
-            <div className="sub-dropdown-content">
-            <div className="sub1-dropdown">
-            <button className="dropbtn">
-              Sub-Module 1 <DownOutlined />
-            </button>
-            <div className="sub2-dropdown-content">
-            <div className="sub2-dropdown">
-            <button className="dropbtn">
-              Form-Group 1 <DownOutlined />
-            </button>
-            <div className="sub3-dropdown-content">
-            <Link to="/form">Form 1</Link>
-            <Link to="/form">Form 2</Link>
-            <Link to="/form">Form 3</Link>
-            <Link to="/form">Form 4</Link>
-            <Link to="/form">Form 5</Link>
-            </div>
-            </div>
-            </div>
-          </div>
-        </div>
-        </div>
-      </div>
-    </div>
-    </div>
+      <ul className="categories list-unstyled">
+        {/* Replace the following HTML content with your dynamic sidebar items */}
+        <li className="has-dropdown animals">
+          <a href="#" onClick={handleCategoryClick}>
+            Dashboard
+          </a>
+          <ul className="sidebar-dropdown list-unstyled">
+            <li>
+              <a href="#">Widget Dashboard</a>
+            </li>
+            <li>
+              <a href="#">Chart Dashboard</a>
+            </li>
+            <li>
+              <a href="#">Real-Time Dashboard</a>
+            </li>
+          </ul>
+        </li>
+        
+    <li className="animals">
+      <a href="#"> About Us</a>
+    </li>
+
+
+    <li className="animals">
+        <a href="#"> Contact Us</a>
+      </li>
+
+
+    <li className="has-dropdown animals">
+      <a href="#"> Services</a>
+      <ul className="sidebar-dropdown list-unstyled">
+        <li className="has-dropdown animals"><a href="#">Web Development</a>
+            <ul className="sidebar-dropdown list-unstyled">
+                <li><a href="#">React JS</a></li>
+                <li><a href="#">Angular JS</a></li>
+              </ul>
+        </li>
+        <li className="has-dropdown animals"><a href="#">Android Development</a>
+            <ul className="sidebar-dropdown list-unstyled">
+                <li><a href="#">React Native</a></li>
+                <li><a href="#">Flutter</a></li>
+              </ul>
+        </li>
+        <li className="animals"><a href="#">DevOps</a></li>
+
+
+      </ul>
+    </li>
+  
+        {/* Other sidebar items */}
+      </ul>
+    </aside>
   );
 };
+
 
 
 class App extends Component {
@@ -97,17 +153,10 @@ class App extends Component {
 }
 
 
-// const COLORS = ['#0088FE', '#00C49F', '#FFBB28'];
-
 class Dashboard extends Component {
 
   render() {
 
-    // const data = [
-    //   { name: 'Category A', value: 350 },
-    //   { name: 'Category B', value: 450 },
-    //   { name: 'Category C', value: 300 },
-    // ];
 
     return (
       <Layout>
@@ -131,28 +180,6 @@ class Dashboard extends Component {
                 minHeight: 'calc(100vh - 112px)',
               }}
             >
-              {
-              //   <div className="chart-container">
-              //   <h2>Pie Chart Widget</h2>
-              //   <ResponsiveContainer width="80%" height={300}>
-              //     <PieChart>
-              //       <Pie
-              //         data={data}
-              //         dataKey="value"
-              //         cx="50%"
-              //         cy="50%"
-              //         outerRadius={80}
-              //         fill="#8884d8"
-              //         label
-              //       >
-              //         {data.map((entry, index) => (
-              //           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-              //         ))}
-              //       </Pie>
-              //     </PieChart>
-              //   </ResponsiveContainer>
-              // </div>
-              }
             </Content>
           </Layout>
         </Layout>
