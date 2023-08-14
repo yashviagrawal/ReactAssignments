@@ -142,6 +142,8 @@ body {
 	transform: rotate(-90deg);
 
 }
+
+/* made by sir */
 .sidebar ul .opened .sidebar-dropdown {
 	display: block;
 	}
