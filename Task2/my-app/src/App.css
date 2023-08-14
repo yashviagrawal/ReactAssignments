@@ -140,16 +140,23 @@ body {
 
 .sidebar ul .opened > a:after {
 	transform: rotate(-90deg);
+
 }
+.sidebar ul .opened .sidebar-dropdown {
+	display: block;
+	}
+
+
 
 /* Start dropdown menu */
 .sidebar ul .sidebar-dropdown {
 	padding-top: 10px;
 	padding-left: 30px;
-	/* display: none; */
+	display: none;
 }
 .sidebar ul .sidebar-dropdown.active {
 	display: block;
+
 }
 
 .sidebar ul .sidebar-dropdown > li > a {

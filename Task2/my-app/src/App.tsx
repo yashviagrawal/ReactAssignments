@@ -7,6 +7,7 @@ import AboutMe from './AboutMe';
 import ContactMe from './ContactMe';
 import FormPage from './Form';
 import './App.css'
+import { log } from 'console';
 
 const { Header, Content } = Layout;
 
@@ -37,6 +38,7 @@ const Sidebar: React.FC = () => {
   };
 
   const handleCategoryClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    console.log("Reached in handleCategoryClick")
     event.preventDefault();
 
     const item = event.currentTarget.closest('.has-dropdown');
@@ -83,19 +85,18 @@ const Sidebar: React.FC = () => {
       <ul className="categories list-unstyled">
         {/* Replace the following HTML content with your dynamic sidebar items */}
         <li className="has-dropdown animals">
-          {/* <a href="#" onClick={handleCategoryClick}>
-          <Link to="/dashboard">Dashboard</Link>
 
-          </a> */}
-          <Link to="/dashboard">Dashboard</Link>
+          <Link onClick={handleCategoryClick} to="/dashboard">Dashboard</Link>
+
+
           <ul className="sidebar-dropdown list-unstyled">
-            <li>
+            <li className='animals'>
               <a href="#">Widget Dashboard</a>
             </li>
-            <li>
+            <li className='animals'>
               <a href="#">Chart Dashboard</a>
             </li>
-            <li>
+            <li className='animals'>
               <a href="#">Real-Time Dashboard</a>
             </li>
           </ul>
@@ -116,18 +117,18 @@ const Sidebar: React.FC = () => {
 
 
     <li className="has-dropdown animals">
-      <a href="#"> Services</a>
+      <a onClick={handleCategoryClick} href="#"> Services</a>
       <ul className="sidebar-dropdown list-unstyled">
-        <li className="has-dropdown animals"><a href="#">Web Development</a>
-            <ul className="sidebar-dropdown list-unstyled">
+        <li  className="has-dropdown animals"><a onClick={handleCategoryClick} href="#">Web Development</a>
+            <ul className="sidebar-dropdown list-unstyled animals">
                 <li><a href="#">React JS</a></li>
                 <li><a href="#">Angular JS</a></li>
               </ul>
         </li>
-        <li className="has-dropdown animals"><a href="#">Android Development</a>
+        <li className="has-dropdown animals"><a onClick={handleCategoryClick} href="#">Android Development</a>
             <ul className="sidebar-dropdown list-unstyled">
-                <li><a href="#">React Native</a></li>
-                <li><a href="#">Flutter</a></li>
+                <li className='animals'><a href="#">React Native</a></li>
+                <li className='animals'><a href="#">Flutter</a></li>
               </ul>
         </li>
         <li className="animals"><a href="#">DevOps</a></li>
@@ -136,7 +137,7 @@ const Sidebar: React.FC = () => {
       </ul>
     </li>
   
-        {/* Other sidebar items */}
+
       </ul>
     </aside>
   );
