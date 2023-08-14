@@ -10,7 +10,10 @@ import './App.css'
 
 const { Header, Content } = Layout;
 
+
 const Sidebar: React.FC = () => {
+
+
   const [searchValue, setSearchValue] = useState('');
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,9 +83,11 @@ const Sidebar: React.FC = () => {
       <ul className="categories list-unstyled">
         {/* Replace the following HTML content with your dynamic sidebar items */}
         <li className="has-dropdown animals">
-          <a href="#" onClick={handleCategoryClick}>
-            Dashboard
-          </a>
+          {/* <a href="#" onClick={handleCategoryClick}>
+          <Link to="/dashboard">Dashboard</Link>
+
+          </a> */}
+          <Link to="/dashboard">Dashboard</Link>
           <ul className="sidebar-dropdown list-unstyled">
             <li>
               <a href="#">Widget Dashboard</a>
@@ -97,12 +102,16 @@ const Sidebar: React.FC = () => {
         </li>
         
     <li className="animals">
-      <a href="#"> About Us</a>
+      {/* <a href="#"> About Us</a> */}
+      <Link to="/about">About Us</Link>
+
     </li>
 
 
     <li className="animals">
-        <a href="#"> Contact Us</a>
+        {/* <a href="#"> Contact Us</a> */}
+        <Link to="/contact">Contact Us</Link>
+
       </li>
 
 
