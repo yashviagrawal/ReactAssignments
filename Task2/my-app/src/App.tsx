@@ -1,11 +1,11 @@
 import React, { Component, useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link, useNavigate } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import { DownOutlined, SearchOutlined } from '@ant-design/icons';
 import LoginPage from './LoginPage';
 import AboutMe from './AboutMe';
 import ContactMe from './ContactMe';
-import FormPage from './Form';
+// import FormPage from './Form';
 import './App.css'
 import { log } from 'console';
 
@@ -37,7 +37,9 @@ const Sidebar: React.FC = () => {
     }
   };
 
-  const handleCategoryClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+  const navigate = useNavigate();
+
+  const handleCategoryClickNav = (event: React.MouseEvent<HTMLAnchorElement>) => {
     console.log("Reached in handleCategoryClick")
     event.preventDefault();
 
@@ -45,6 +47,10 @@ const Sidebar: React.FC = () => {
     if (!item) {
       return;
     }
+
+    if (item.classList.contains('opened')) {
+      navigate('/dashboard'); // Perform navigation when the dropdown is already open
+    } else {
 
     item.classList.toggle('opened');
 
@@ -65,11 +71,44 @@ const Sidebar: React.FC = () => {
         toClose.classList.remove('active');
       }
     });
+  }
   };
+
+    // services 
+    const handleCategoryClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+      console.log("Reached in handleCategoryClick")
+      event.preventDefault();
+  
+      const item = event.currentTarget.closest('.has-dropdown');
+      if (!item) {
+        return;
+      }
+  
+      item.classList.toggle('opened');
+  
+      Array.from(item.parentNode!.children).forEach((sibling) => {
+        if (sibling !== item) {
+          sibling.classList.remove('opened');
+        }
+      });
+  
+      const toOpen = item.querySelector('.sidebar-dropdown');
+      if (toOpen) {
+        toOpen.classList.toggle('active');
+      }
+  
+      Array.from(item.parentNode!.children).forEach((sibling) => {
+        const toClose = sibling.querySelector('.sidebar-subdrop');
+        if (toClose) {
+          toClose.classList.remove('active');
+        }
+      });
+    };
+  
 
   // subdrop down 
   const handleCategoryClickSub = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    console.log("Reached in handleCategoryClick")
+    console.log("Reached in handleCategoryClickSub")
     event.preventDefault();
 
     const item = event.currentTarget.closest('.has-subdrop');
@@ -106,7 +145,8 @@ const Sidebar: React.FC = () => {
           id="searchbar"
           name="search"
           type="text"
-          className="form-control w-100 border-0 bg-transparent"
+          className="form-control w-100 border-0"
+          // className="form-control w-100 border-0 bg-transparent"
           placeholder="Search here"
           value={searchValue}
           onChange={handleSearch}
@@ -116,7 +156,7 @@ const Sidebar: React.FC = () => {
 
       <ul className="categories list-unstyled">
         <li className="has-dropdown animals">
-          <Link onClick={handleCategoryClick} to="/dashboard">Dashboard</Link>
+          <Link to="#" onClick={handleCategoryClickNav}>Dashboard</Link>
           <ul className="sidebar-dropdown list-unstyled">
             <li className='animals'>
               <Link to="#">Widget Dashboard</Link>
@@ -182,7 +222,7 @@ class App extends Component {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/about" element={<AboutMe />} />
           <Route path="/contact" element={<ContactMe />} />
-          <Route path="/form" element={<FormPage />} />
+          {/* <Route path="/form" element={<FormPage />} /> */}
         </Routes>
       </Router>
     );
