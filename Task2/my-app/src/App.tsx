@@ -67,6 +67,38 @@ const Sidebar: React.FC = () => {
     });
   };
 
+  // subdrop down 
+  const handleCategoryClickSub = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    console.log("Reached in handleCategoryClick")
+    event.preventDefault();
+
+    const item = event.currentTarget.closest('.has-subdrop');
+    if (!item) {
+      return;
+    }
+
+    item.classList.toggle('opened');
+
+    Array.from(item.parentNode!.children).forEach((sibling) => {
+      if (sibling !== item) {
+        sibling.classList.remove('opened');
+      }
+    });
+
+    const toOpen = item.querySelector('.sidebar-subdrop');
+    if (toOpen) {
+      toOpen.classList.toggle('active');
+    }
+
+    Array.from(item.parentNode!.children).forEach((sibling) => {
+      const toClose = sibling.querySelector('.sidebar-subdrop');
+      if (toClose) {
+        toClose.classList.remove('active');
+      }
+    });
+  };
+
+
   return (
     <aside className="sidebar position-fixed top-0 left-0 overflow-auto h-100 float-left" id="show-side-navigation1">
       <div className="search position-relative text-center px-4 py-3 mt-2">
@@ -83,55 +115,50 @@ const Sidebar: React.FC = () => {
       </div>
 
       <ul className="categories list-unstyled">
-        {/* Replace the following HTML content with your dynamic sidebar items */}
         <li className="has-dropdown animals">
-
           <Link onClick={handleCategoryClick} to="/dashboard">Dashboard</Link>
-
-
           <ul className="sidebar-dropdown list-unstyled">
             <li className='animals'>
-              <a href="#">Widget Dashboard</a>
+              <Link to="#">Widget Dashboard</Link>
             </li>
             <li className='animals'>
-              <a href="#">Chart Dashboard</a>
+              <Link to="#">Chart Dashboard</Link>
             </li>
             <li className='animals'>
-              <a href="#">Real-Time Dashboard</a>
+              <Link to="#">Real-Time Dashboard</Link>
             </li>
           </ul>
         </li>
         
     <li className="animals">
-      {/* <a href="#"> About Us</a> */}
       <Link to="/about">About Us</Link>
-
     </li>
 
 
     <li className="animals">
-        {/* <a href="#"> Contact Us</a> */}
         <Link to="/contact">Contact Us</Link>
 
       </li>
 
 
-    <li className="has-dropdown animals">
-      <a onClick={handleCategoryClick} href="#"> Services</a>
+    <li className="has-dropdown animals subdrop">
+      <Link onClick={handleCategoryClick} to="#"> Services</Link>
       <ul className="sidebar-dropdown list-unstyled">
-        <li  className="has-dropdown animals"><a onClick={handleCategoryClick} href="#">Web Development</a>
-            <ul className="sidebar-dropdown list-unstyled animals">
-                <li><a href="#">React JS</a></li>
-                <li><a href="#">Angular JS</a></li>
+        <li className="has-dropdown animals has-subdrop">
+          <Link onClick={handleCategoryClickSub} to="#">Web Development</Link>
+            <ul className="sidebar-dropdown list-unstyled animals sidebar-subdrop">
+                <li className='animals'><Link to="#">React JS</Link></li>
+                <li className='animals'><Link to="#">Angular JS</Link></li>
               </ul>
         </li>
-        <li className="has-dropdown animals"><a onClick={handleCategoryClick} href="#">Android Development</a>
-            <ul className="sidebar-dropdown list-unstyled">
-                <li className='animals'><a href="#">React Native</a></li>
-                <li className='animals'><a href="#">Flutter</a></li>
+        <li className="has-dropdown animals has-subdrop">
+          <Link onClick={handleCategoryClickSub} to="#">Android Development</Link>
+            <ul className="sidebar-dropdown list-unstyled animals sidebar-subdrop">
+                <li className='animals'><Link to="#">React Native</Link></li>
+                <li className='animals'><Link to="#">Flutter</Link></li>
               </ul>
         </li>
-        <li className="animals"><a href="#">DevOps</a></li>
+        <li className="animals"><Link to="#">DevOps</Link></li>
 
 
       </ul>
