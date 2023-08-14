@@ -1,10 +1,13 @@
 import React, { Component, useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link, useNavigate, Navigate } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import { DownOutlined, SearchOutlined } from '@ant-design/icons';
 import LoginPage from './LoginPage';
 import AboutMe from './AboutMe';
 import ContactMe from './ContactMe';
+import { AuthContextProvider, useAuth } from './AuthContext';
+import LogoutPage from './LogoutPage';
+
 // import FormPage from './Form';
 import './App.css'
 import { log } from 'console';
@@ -212,40 +215,61 @@ const Sidebar: React.FC = () => {
 
 
 
-class App extends Component {
-  render() {
+const App: React.FC = () => {
+  // const { isAuthenticated } = useAuth();
+  // console.log(isAuthenticated);
+
     return (
+      <AuthContextProvider>
       <Router>
         <Routes>
           <Route path="/" element={<LoginPage />} />
-          <Route path="/logout" element={<LoginPage />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          
+
           <Route path="/about" element={<AboutMe />} />
           <Route path="/contact" element={<ContactMe />} />
+          <Route path="/logout" element={<LogoutPage />} />
+          {/* <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/logout" />} /> */}
+
           {/* <Route path="/form" element={<FormPage />} /> */}
         </Routes>
       </Router>
+      </AuthContextProvider>
     );
-  }
+  
 }
 
 
-class Dashboard extends Component {
-
-  render() {
 
 
-    return (
-      <Layout>
-        <Header>
-          <div className="logo" />
-          <Menu theme="dark" mode="horizontal" style={{ display: 'flex', justifyContent: 'flex-end' }} defaultSelectedKeys={['1']}>
-            <Menu.Item key="1">Username</Menu.Item>
-            <Menu.Item key="/logout">
-              <Link to="/logout">Logout</Link>
-            </Menu.Item>
-          </Menu>
-        </Header>
+const Dashboard: React.FC = () => {
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    // After logout, navigate to the login page
+    navigate('/logout'); // Replace with your login route
+  };
+
+  return (
+    <Layout>
+      <Header>
+        <div className="logo" />
+        <Menu
+          theme="dark"
+          mode="horizontal"
+          style={{ display: 'flex', justifyContent: 'flex-end' }}
+          defaultSelectedKeys={['1']}
+        >
+          <Menu.Item key="1">Username</Menu.Item>
+          <Menu.Item key="/logout">
+            <Link to="/logout" onClick={handleLogout}>Logout</Link>
+          </Menu.Item>
+        </Menu>
+      </Header>
         <Sidebar />
         <Layout>
           <Layout style={{ padding: '24px' }}>
@@ -263,6 +287,6 @@ class Dashboard extends Component {
       </Layout>
     );
   }
-}
+
 
 export default App;
