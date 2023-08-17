@@ -24,18 +24,18 @@ const Sidebar: React.FC = () => {
     setSearchValue(event.target.value);
   };
 
-  const animals = document.getElementsByClassName('animals');
+  const menuItems = document.getElementsByClassName('menuItems');
 
-  const searchAnimal = () => {
-    const input = document.getElementById('searchbar') as HTMLInputElement;
-    const inputValue = input.value.toLowerCase();
+  const searchMenuItem = () => {
+    const searchBarInput = document.getElementById('searchbar') as HTMLInputElement;
+    const inputValue = searchBarInput.value.toLowerCase();
 
-    for (let i = 0; i < animals.length; i++) {
-      const animal = animals[i] as HTMLElement;
-      if (!animal.innerHTML.toLowerCase().includes(inputValue)) {
-        animal.style.display = 'none';
+    for (let i = 0; i < menuItems.length; i++) {
+      const menuItem = menuItems[i] as HTMLElement;
+      if (!menuItem.innerHTML.toLowerCase().includes(inputValue)) {
+        menuItem.style.display = 'none';
       } else {
-        animal.style.display = 'list-item';
+        menuItem.style.display = 'list-item';
       }
     }
   };
@@ -153,55 +153,55 @@ const Sidebar: React.FC = () => {
           placeholder="Search here"
           value={searchValue}
           onChange={handleSearch}
-          onKeyUp={searchAnimal}
+          onKeyUp={searchMenuItem}
         />
       </div>
 
       <ul className="categories list-unstyled">
-        <li className="has-dropdown animals">
+        <li className="has-dropdown menuItems">
           <Link to="#" onClick={handleCategoryClickNav}>Dashboard</Link>
           <ul className="sidebar-dropdown list-unstyled">
-            <li className='animals'>
+            <li className='menuItems'>
               <Link to="#">Widget Dashboard</Link>
             </li>
-            <li className='animals'>
+            <li className='menuItems'>
               <Link to="#">Chart Dashboard</Link>
             </li>
-            <li className='animals'>
+            <li className='menuItems'>
               <Link to="#">Real-Time Dashboard</Link>
             </li>
           </ul>
         </li>
         
-    <li className="animals">
+    <li className="menuItems">
       <Link to="/about">About Us</Link>
     </li>
 
 
-    <li className="animals">
+    <li className="menuItems">
         <Link to="/contact">Contact Us</Link>
 
       </li>
 
 
-    <li className="has-dropdown animals subdrop">
+    <li className="has-dropdown menuItems subdrop">
       <Link onClick={handleCategoryClick} to="#"> Services</Link>
       <ul className="sidebar-dropdown list-unstyled">
-        <li className="has-dropdown animals has-subdrop">
+        <li className="has-dropdown menuItems has-subdrop">
           <Link onClick={handleCategoryClickSub} to="#">Web Development</Link>
-            <ul className="sidebar-dropdown list-unstyled animals sidebar-subdrop">
-                <li className='animals'><Link to="#">React JS</Link></li>
-                <li className='animals'><Link to="#">Angular JS</Link></li>
+            <ul className="sidebar-dropdown list-unstyled menuItems sidebar-subdrop">
+                <li className='menuItems'><Link to="#">React JS</Link></li>
+                <li className='menuItems'><Link to="#">Angular JS</Link></li>
               </ul>
         </li>
-        <li className="has-dropdown animals has-subdrop">
+        <li className="has-dropdown menuItems has-subdrop">
           <Link onClick={handleCategoryClickSub} to="#">Android Development</Link>
-            <ul className="sidebar-dropdown list-unstyled animals sidebar-subdrop">
-                <li className='animals'><Link to="#">React Native</Link></li>
-                <li className='animals'><Link to="#">Flutter</Link></li>
+            <ul className="sidebar-dropdown list-unstyled menuItems sidebar-subdrop">
+                <li className='menuItems'><Link to="#">React Native</Link></li>
+                <li className='menuItems'><Link to="#">Flutter</Link></li>
               </ul>
         </li>
-        <li className="animals"><Link to="#">DevOps</Link></li>
+        <li className="menuItems"><Link to="#">DevOps</Link></li>
 
 
       </ul>
