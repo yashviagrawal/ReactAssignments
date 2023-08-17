@@ -14,7 +14,7 @@ const LogoutPage: React.FC = () => {
     window.history.go(0); // Reload the page to reflect the changes
   }, [logout]);
 
-  return <div>Logging out...</div>;
+  return <div><h2>Logging out...</h2></div>;
 };
 
 export default LogoutPage;
