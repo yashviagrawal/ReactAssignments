@@ -6,7 +6,6 @@ import LoginPage from './LoginPage';
 import AboutMe from './AboutMe';
 import ContactMe from './ContactMe';
 import { AuthContextProvider, useAuth } from './AuthContext';
-import LogoutPage from './LogoutPage';
 
 // import FormPage from './Form';
 import './App.css'
@@ -216,21 +215,28 @@ const Sidebar: React.FC = () => {
 
 
 const App: React.FC = () => {
-  // const { isAuthenticated } = useAuth();
-  // console.log(isAuthenticated);
+  const authToken = localStorage.getItem('authToken');
 
     return (
       <AuthContextProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<LoginPage />} />
+        <Route
+          path="/" // Path for the parent route
+          element={authToken ? <Navigate to="/login" /> : <LoginPage />} // Use Navigate element
+        />
+        <Route
+          path="/dashboard" // Path for the child route
+          element={authToken ? <Dashboard /> : <Navigate to="/dashboard" />} // Use Navigate element
+        />
+      
+          {/* <Route path="/" element={<LoginPage />} /> */}
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          {/* <Route path="/dashboard" element={<Dashboard />} /> */}
           
 
           <Route path="/about" element={<AboutMe />} />
           <Route path="/contact" element={<ContactMe />} />
-          <Route path="/logout" element={<LogoutPage />} />
           {/* <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/logout" />} /> */}
 
           {/* <Route path="/form" element={<FormPage />} /> */}
@@ -245,13 +251,12 @@ const App: React.FC = () => {
 
 
 const Dashboard: React.FC = () => {
-  const { logout } = useAuth();
-  const navigate = useNavigate();
-
   const handleLogout = () => {
-    logout();
-    // After logout, navigate to the login page
-    navigate('/logout'); // Replace with your login route
+    // Clear the token from localStorage
+    localStorage.removeItem('authToken');
+
+    // Redirect to the login page
+    window.location.href = '/';
   };
 
   return (

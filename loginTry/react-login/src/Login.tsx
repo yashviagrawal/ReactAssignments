@@ -1,8 +1,7 @@
-// Login.tsx
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 import { login } from './api';
-import Dashboard from './components/Dashboard';
 
 
 const Login: React.FC = () => {

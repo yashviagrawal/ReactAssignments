@@ -1,53 +1,45 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { Form, Input, Button, Card, message } from 'antd';
-import axios from 'axios';
+import { login } from './api';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 
-class LoginPage extends Component {
-  handleLogin = async (values: any) => {
+
+
+const LoginPage: React.FC = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate(); // Use useNavigate instead of useHistory
+
+  const handleLogin = async () => {
     try {
-      const response = await axios.post('http://localhost:3001/login', values);
-
-      if (response.status === 200) {
-        // Authentication successful
-        message.success('Login successful');
-        
-        // Manually update the authentication state and store in component state
-        this.setState({ isAuthenticated: true });
-
-        // Perform further actions like redirecting to the dashboard
-        window.location.href = '/dashboard';
-      } else {
-        // Authentication failed
-        message.error('Login failed');
-      }
+      await login(username, password);
+      localStorage.setItem('authToken', 'yourAuthToken');
+      navigate('/dashboard'); // Use navigate to redirect
     } catch (error) {
-      message.error('Login failed');
-      console.error('An error occurred:', error);
+      console.error('Login error:', error);
     }
   };
 
-  render() {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
         <Card style={{ width: 400, padding: '24px' }}>
           <h2>Login</h2>
-          <Form onFinish={this.handleLogin}>
-          <Form.Item label="Username" name="username" rules={[{ required: true, message: 'Please enter your username' }]}>
-              <Input placeholder="Username" />
-            </Form.Item>
-            <Form.Item label="Password" name="password" rules={[{ required: true, message: 'Please enter your password' }]}>
-              <Input.Password placeholder="Password" />
-            </Form.Item>
-            <Form.Item>
-              <Button type="primary" htmlType="submit" style={{ width: '100%' }}>
-                Login
-              </Button>
-            </Form.Item>
-          </Form>
-        </Card>
-      </div>
+      <input
+        type="text"
+        placeholder="Username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <button onClick={handleLogin}>Login</button>
+      </Card>
+    </div>
     );
   }
-}
 
 export default LoginPage;
