@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useRef } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link, useNavigate } from 'react-router-dom';
 import { Form, Input, Button, Card, message, Layout, Menu } from 'antd';
 import { DownOutlined, SearchOutlined } from '@ant-design/icons';
@@ -13,29 +13,27 @@ import Dashboard from './App';
 const { Header, Content } = Layout;
 
 const Sidebar: React.FC = () => {
-
   const [searchValue, setSearchValue] = useState('');
+  const menuItemsRef = useRef<(HTMLLIElement | HTMLUListElement)[]>([]);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
   };
 
-  const animals = document.getElementsByClassName('animals');
-
-  const searchAnimal = () => {
-    const input = document.getElementById('searchbar') as HTMLInputElement;
-    const inputValue = input.value.toLowerCase();
-
-    for (let i = 0; i < animals.length; i++) {
-      const animal = animals[i] as HTMLElement;
-      if (!animal.innerHTML.toLowerCase().includes(inputValue)) {
-        animal.style.display = 'none';
-      } else {
-        animal.style.display = 'list-item';
+  const searchMenuItem = () => {
+    const inputValue = searchValue.toLowerCase();
+  
+    menuItemsRef.current.forEach(item => {
+      if (item instanceof HTMLLIElement || item instanceof HTMLUListElement) {
+        const link = item.querySelector('a');
+        if (link) {
+          const itemText = link.textContent?.toLowerCase() || '';
+          item.style.display = itemText.includes(inputValue) ? 'list-item' : 'none';
+        }
       }
-    }
+    });
   };
-
+    
   const navigate = useNavigate();
 
   const handleCategoryClickNav = (event: React.MouseEvent<HTMLAnchorElement>) => {
@@ -145,58 +143,59 @@ const Sidebar: React.FC = () => {
           name="search"
           type="text"
           className="form-control w-100 border-0"
+          // className="form-control w-100 border-0 bg-transparent"
           placeholder="Search here"
           value={searchValue}
           onChange={handleSearch}
-          onKeyUp={searchAnimal}
+          onKeyUp={searchMenuItem}
         />
       </div>
 
       <ul className="categories list-unstyled">
-        <li className="has-dropdown animals">
+        <li className="has-dropdown menuItems" ref={(el) => el && menuItemsRef.current.push(el)}>
           <Link to="#" onClick={handleCategoryClickNav}>Dashboard</Link>
           <ul className="sidebar-dropdown list-unstyled">
-            <li className='animals'>
+            <li className="menuItems" ref={(el) => el && menuItemsRef.current.push(el)}>
               <Link to="#">Widget Dashboard</Link>
             </li>
-            <li className='animals'>
+            <li className="menuItems" ref={(el) => el && menuItemsRef.current.push(el)}>
               <Link to="#">Chart Dashboard</Link>
             </li>
-            <li className='animals'>
+            <li className="menuItems" ref={(el) => el && menuItemsRef.current.push(el)}>
               <Link to="#">Real-Time Dashboard</Link>
             </li>
           </ul>
         </li>
         
-    <li className="animals">
+    <li className="mmenuItems" ref={(el) => el && menuItemsRef.current.push(el)}>
       <Link to="/about">About Us</Link>
     </li>
 
 
-    <li className="animals">
+    <li className="menuItems" ref={(el) => el && menuItemsRef.current.push(el)}>
         <Link to="/contact">Contact Us</Link>
 
       </li>
 
 
-    <li className="has-dropdown animals subdrop">
+    <li className="has-dropdown subdrop menuItems" ref={(el) => el && menuItemsRef.current.push(el)}>
       <Link onClick={handleCategoryClick} to="#"> Services</Link>
       <ul className="sidebar-dropdown list-unstyled">
-        <li className="has-dropdown animals has-subdrop">
+        <li className="has-dropdown has-subdrop menuItems" ref={(el) => el && menuItemsRef.current.push(el)}>
           <Link onClick={handleCategoryClickSub} to="#">Web Development</Link>
-            <ul className="sidebar-dropdown list-unstyled animals sidebar-subdrop">
-                <li className='animals'><Link to="#">React JS</Link></li>
-                <li className='animals'><Link to="#">Angular JS</Link></li>
+            <ul className="sidebar-dropdown list-unstyled sidebar-subdrop menuItems" ref={(el) => el && menuItemsRef.current.push(el)}>
+                <li className="menuItems" ref={(el) => el && menuItemsRef.current.push(el)}><Link to="#">React JS</Link></li>
+                <li className="menuItems" ref={(el) => el && menuItemsRef.current.push(el)}><Link to="#">Angular JS</Link></li>
               </ul>
         </li>
-        <li className="has-dropdown animals has-subdrop">
+        <li className="has-dropdown has-subdrop menuItems" ref={(el) => el && menuItemsRef.current.push(el)}>
           <Link onClick={handleCategoryClickSub} to="#">Android Development</Link>
-            <ul className="sidebar-dropdown list-unstyled animals sidebar-subdrop">
-                <li className='animals'><Link to="#">React Native</Link></li>
-                <li className='animals'><Link to="#">Flutter</Link></li>
+            <ul className="sidebar-dropdown list-unstyled sidebar-subdrop menuItems" ref={(el) => el && menuItemsRef.current.push(el)}>
+                <li className="menuItems" ref={(el) => el && menuItemsRef.current.push(el)}><Link to="#">React Native</Link></li>
+                <li className="menuItems" ref={(el) => el && menuItemsRef.current.push(el)}><Link to="#">Flutter</Link></li>
               </ul>
         </li>
-        <li className="animals"><Link to="#">DevOps</Link></li>
+        <li className="menuItems" ref={(el) => el && menuItemsRef.current.push(el)}><Link to="#">DevOps</Link></li>
 
 
       </ul>
