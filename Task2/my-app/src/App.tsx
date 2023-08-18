@@ -1,4 +1,4 @@
-import React, { Component, useState, useRef } from 'react';
+import React, { Component, useState, useRef, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link, useNavigate, Navigate } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import { DownOutlined, SearchOutlined } from '@ant-design/icons';
@@ -232,8 +232,9 @@ const App: React.FC = () => {
           {/* <Route path="/dashboard" element={<Dashboard />} /> */}
           
 
-          <Route path="/about" element={<AboutMe />} />
-          <Route path="/contact" element={<ContactMe />} />
+          <Route path="/about" element={authToken ? <AboutMe /> : <Navigate to="/about" />} />
+
+          <Route path="/contact" element={authToken ? <ContactMe /> : <Navigate to="/contact" />} />
           {/* <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/logout" />} /> */}
 
           {/* <Route path="/form" element={<FormPage />} /> */}
@@ -255,6 +256,18 @@ const Dashboard: React.FC = () => {
     // Redirect to the login page
     window.location.href = '/';
   };
+  const [username, setUsername] = useState('');
+
+  useEffect(() => {
+    const savedUsername = localStorage.getItem('username');
+    if (savedUsername !== null) {
+      setUsername(savedUsername);
+    }
+  }, []);
+
+  const capitalizeFirstLetter = (text: string) => {
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  };
 
   return (
     <Layout>
@@ -266,7 +279,7 @@ const Dashboard: React.FC = () => {
           style={{ display: 'flex', justifyContent: 'flex-end' }}
           defaultSelectedKeys={['1']}
         >
-          <Menu.Item key="1">Username</Menu.Item>
+          <Menu.Item key="1">{capitalizeFirstLetter(username)}</Menu.Item>
           <Menu.Item key="/logout">
             <Link to="/logout" onClick={handleLogout}>Logout</Link>
           </Menu.Item>

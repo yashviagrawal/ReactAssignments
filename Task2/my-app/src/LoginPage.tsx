@@ -14,6 +14,7 @@ const LoginPage: React.FC = () => {
     try {
       await login(username, password);
       localStorage.setItem('authToken', 'yourAuthToken');
+      localStorage.setItem('username', username); // Save the username
       navigate('/dashboard'); // Use navigate to redirect
     } catch (error) {
       console.error('Login error:', error);
